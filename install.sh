@@ -5,46 +5,34 @@
 
 vim() {
    curl -fsSLo ~/.vimrc https://raw.github.com/deppan/utility/master/vimrc
-   if [ $? != 0 ];then
-     return -1
-   fi
 }
 
 brew() {
-  command="$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"
-  if [ -z "$command" ];then
-    return -1
-  fi
-  sh -c "$command"
+  # Install brew
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
   # Install iterm2
-  brew install --cask iterm2
+  /usr/local/bin/brew install --cask iterm2
 
   # Install font
-  brew tap homebrew/cask-fonts
-  brew install --cask font-fira-code
+  /usr/local/bin/brew tap homebrew/cask-fonts
+  /usr/local/bin/brew install --cask font-fira-code
 }
 
 omz() {
   # Install oh my zsh
-  command="$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  if [ -z "$command" ];then
-    return -1
-  fi
-  sh -c "$command"
+  sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
   # Install theme of oh my zsh 
-  git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
+  /usr/bin/git clone https://github.com/denysdovhan/spaceship-prompt.git "$ZSH_CUSTOM/themes/spaceship-prompt" --depth=1
   ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
   sed -i "" "s/^ZSH_THEME=.*$/ZSH_THEME=\"spaceship\"/" ~/.zshrc
 
   curl -fsSLo ~/.zprofile https://raw.github.com/deppan/utility/master/zprofile
-  if [ $? != 0 ];then
-    return -1
-  fi
 }
 
 mac() {
+  xcode-select --install
   brew
   omz
 }
@@ -60,19 +48,6 @@ install() {
   elif [ $sysOS == "Linux" ];then
     linux
   fi
-
-  vim
 }
-
-proxy() {
-  export http_proxy=http://127.0.0.1:7890
-  export https_proxy=http://127.0.0.1:7890
-}
-
-for arg in "$@"; do
-  if [ $arg=="proxy" ]; then
-    proxy
-  fi
-done
 
 install
