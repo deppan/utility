@@ -3,8 +3,6 @@ if [ $JAVA_HOME ]; then
   export JAVA_HOME=$JAVA_HOME
 fi
 
-alias subl="/Applications/Sublime\ Text.app/Contents/SharedSupport/bin/subl"
-
 proxy() {
 	export http_proxy=http://127.0.0.1:7890
 	export https_proxy=http://127.0.0.1:7890

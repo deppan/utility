@@ -32,6 +32,7 @@ omz() {
 }
 
 mac() {
+  vim
   xcode-select --install
   brew
   omz
@@ -39,6 +40,8 @@ mac() {
 
 linux() {
   echo "set completion-ignore-case on" > ~/.inputrc
+  vim
+  omz
 }
 
 install() {
